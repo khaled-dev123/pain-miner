@@ -41,7 +41,7 @@ export default function App() {
     setResults([])
     setErrors({})
     try {
-      const res = await axios.post("http://localhost:8000/scrape", {
+      const res = await axios.post("https://pain-miner-production.up.railway.app/scrape", {
         keywords,
         platforms,
         limit: 20,
