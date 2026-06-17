@@ -1,21 +1,26 @@
 # 🚀 Pain Miner
 
-**Pain Miner** is a startup idea discovery tool that helps entrepreneurs, indie hackers, and developers uncover real user problems from communities across the internet.
+**Pain Miner** is a startup idea discovery platform that helps entrepreneurs, indie hackers, and developers uncover real market opportunities by mining user frustrations from online communities.
 
-Instead of brainstorming ideas from scratch, Pain Miner finds actual complaints, frustrations, unmet needs, and feature requests posted by users on platforms like Reddit, Hacker News, and Product Hunt.
+Instead of guessing what to build, Pain Miner searches platforms like Reddit, Hacker News, and Product Hunt for complaints, feature requests, inefficiencies, and unmet needs. The collected insights can be analyzed and exported for startup validation and product research.
+
+## 🌐 Live Demo
+
+👉 [https://pain-miner-omega.vercel.app/](https://pain-miner-omega.vercel.app/)
 
 ---
 
 ## ✨ Features
 
-* 🔍 Search for pain-point keywords across multiple platforms
-* 🧠 Discover startup opportunities from real user frustrations
-* 📊 View results in a clean table interface
-* 📁 Export findings to CSV for further analysis
+* 🔍 Search pain-point keywords across multiple platforms
+* 🧠 Discover startup ideas from real user frustrations
+* 📊 Clean results dashboard
+* 📁 CSV export for further analysis
 * 🎯 Multi-platform search support
-* ⚡ Fast scraping powered by FastAPI
-* ✅ Input validation and loading feedback
-* 🔑 Reddit API credential setup guide
+* ⚡ FastAPI-powered backend
+* 🔑 Reddit API integration
+* ✅ Input validation and loading states
+* 💡 Keyword suggestions and autocomplete
 
 ---
 
@@ -33,48 +38,32 @@ Instead of brainstorming ideas from scratch, Pain Miner finds actual complaints,
 * FastAPI
 * Python
 
-### Scraping & Data Sources
+### Data Sources
 
-* PRAW (Reddit API)
-* Algolia Search API (Hacker News)
-* Product Hunt GraphQL API
-* BeautifulSoup
+* Reddit (PRAW API)
+* Hacker News (Algolia API)
+* Product Hunt (GraphQL API)
+
+### Scraping Tools
+
 * HTTPX
+* BeautifulSoup
 
 ---
 
-## 🌐 Supported Platforms
+## 🌍 Supported Platforms
 
-### Reddit
-
-Searches posts and discussions using Reddit's API via PRAW.
-
-**Requires:**
-
-* Reddit Client ID
-* Reddit Client Secret
-
-### Hacker News
-
-Searches discussions using the public Algolia Hacker News API.
-
-**Requires:**
-
-* No authentication
-
-### Product Hunt
-
-Searches product discussions and launches through the Product Hunt GraphQL API.
-
-**Requires:**
-
-* Product Hunt API Token
+| Platform     | Method             |
+| ------------ | ------------------ |
+| Reddit       | PRAW API           |
+| Hacker News  | Algolia Search API |
+| Product Hunt | GraphQL API        |
 
 ---
 
-## 💡 Example Keywords
+## 💡 Example Searches
 
-Pain Miner works best with phrases that indicate frustration, inefficiency, or unmet needs:
+Pain Miner performs best when searching for frustration-oriented phrases:
 
 ```text
 i wish
@@ -82,12 +71,12 @@ no tool for
 manually doing
 frustrated with
 hate using
-looking for
-need a way to
 takes too long
+need a way to
+looking for
 ```
 
-Example:
+Example query:
 
 ```text
 i wish
@@ -97,21 +86,21 @@ no tool for
 
 ---
 
-## 📋 Results
+## 📊 Output
 
-Each result contains:
+Each result includes:
 
-| Field           | Description                         |
-| --------------- | ----------------------------------- |
-| Source          | Platform where the result was found |
-| Title           | Post title or discussion title      |
-| Score           | Popularity score/upvotes            |
-| Matched Keyword | Keyword that triggered the match    |
-| Link            | Direct URL to the original content  |
+| Field           | Description                       |
+| --------------- | --------------------------------- |
+| Source          | Platform where the post was found |
+| Title           | Post title                        |
+| Score           | Upvotes / popularity score        |
+| Matched Keyword | Trigger keyword                   |
+| Link            | Original post URL                 |
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```bash
 pain-miner/
@@ -132,18 +121,16 @@ pain-miner/
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Local Development
 
-### 1. Clone the Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/yourusername/pain-miner.git
 cd pain-miner
 ```
 
----
-
-### 2. Backend Setup
+### Backend
 
 ```bash
 cd backend
@@ -155,33 +142,26 @@ source venv/bin/activate
 # venv\Scripts\activate
 
 pip install -r requirements.txt
-```
 
-Start the API:
-
-```bash
 uvicorn main:app --reload
 ```
 
-Backend will run on:
+Backend runs on:
 
 ```text
 http://localhost:8000
 ```
 
----
-
-### 3. Frontend Setup
+### Frontend
 
 ```bash
 cd frontend
 
 npm install
-
 npm run dev
 ```
 
-Frontend will run on:
+Frontend runs on:
 
 ```text
 http://localhost:5173
@@ -191,25 +171,25 @@ http://localhost:5173
 
 ## 🔑 Reddit API Setup
 
-1. Visit:
-   [https://www.reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
+1. Visit [https://www.reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
 2. Click **Create App**
 3. Select **Script**
 4. Copy:
    * Client ID
    * Client Secret
-5. Enter them in the Pain Miner UI
+5. Paste them into Pain Miner
 
 ---
 
-## 📤 CSV Export
+## 📤 Export Results
 
-After scraping completes, click **Export CSV** to download all collected results for analysis in:
+All search results can be exported as CSV and imported into:
 
 * Excel
 * Google Sheets
-* Notion
 * Airtable
+* Notion
+* Data analysis pipelines
 
 ---
 
@@ -217,45 +197,47 @@ After scraping completes, click **Export CSV** to download all collected results
 
 ### Frontend
 
-Deploy on Vercel:
-
-```bash
-vercel
-```
+* Vercel
 
 ### Backend
 
-Deploy on Railway:
-
-```bash
-railway up
-```
+* Railway
 
 ---
 
 ## 🎯 Use Cases
 
-* Discover startup ideas
-* Validate market demand
-* Find SaaS opportunities
-* Research customer pain points
-* Generate product ideas
-* Analyze community frustrations
-* Build problem-first businesses
+* Startup idea generation
+* SaaS opportunity discovery
+* Market research
+* Customer pain-point analysis
+* Product validation
+* Feature request mining
+* Trend spotting
 
 ---
 
-## 🔮 Future Improvements
+## 🔮 Future Roadmap
 
-* AI-powered pain point clustering
-* Sentiment analysis
+* AI-powered pain clustering
 * Automatic startup idea generation
+* Sentiment analysis
 * Trend detection
-* Save searches
-* User authentication
-* Database storage
+* User accounts
+* Search history
+* Saved projects
 * Email alerts
-* Additional data sources (X, GitHub Issues, Indie Hackers)
+* GitHub Issues support
+* Indie Hackers integration
+* X (Twitter) integration
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and pull requests are welcome.
+
+Feel free to fork the project and improve it.
 
 ---
 
@@ -265,16 +247,8 @@ MIT License
 
 ---
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome.
-
-Feel free to fork the project and submit a pull request.
-
----
-
 ## ⭐ Support
 
-If you find this project useful, consider giving it a star on GitHub.
+If you find this project useful, consider starring the repository.
 
-It helps others discover the project and motivates future development.
+Building great startups starts with finding real problems.
