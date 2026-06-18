@@ -1,6 +1,6 @@
 import httpx
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 PH_API_URL = "https://api.producthunt.com/v2/api/graphql"
 
@@ -52,17 +52,15 @@ async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str 
                 title = node.get("name", "")
                 body = node.get("description") or node.get("tagline", "")
 
-                # filter by keyword manually
-                if keyword.lower() in title.lower() or keyword.lower() in body.lower():
-                    results.append({
-                        "source": "producthunt",
-                        "title": title,
-                        "body": body[:500],
-                        "url": node.get("url", ""),
-                        "score": node.get("votesCount", 0),
-                        "author": "",
-                        "scraped_at": datetime.utcnow().isoformat(),
-                        "keyword_matched": keyword
-                    })
+                results.append({
+                    "source": "producthunt",
+                    "title": title,
+                    "body": body[:500],
+                    "url": node.get("url", ""),
+                    "score": node.get("votesCount", 0),
+                    "author": "",
+                    "scraped_at": datetime.now(timezone.utc).isoformat(),
+                    "keyword_matched": keyword
+                })
 
     return results
