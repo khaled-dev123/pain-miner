@@ -2,7 +2,7 @@
 
 **Pain Miner** is a startup idea discovery platform that helps entrepreneurs, indie hackers, and developers uncover real market opportunities by mining user frustrations from online communities.
 
-Instead of guessing what to build, Pain Miner searches platforms like Reddit, Hacker News, and Product Hunt for complaints, feature requests, inefficiencies, and unmet needs. The collected insights can be analyzed and exported for startup validation and product research.
+Instead of guessing what to build, Pain Miner searches platforms like Reddit, Hacker News, arXiv, Dev.to and Product Hunt for complaints, feature requests, inefficiencies, and unmet needs. The collected insights can be analyzed and exported for startup validation and product research.
 
 ## 🌐 Live Demo
 
@@ -16,8 +16,8 @@ Instead of guessing what to build, Pain Miner searches platforms like Reddit, Ha
 * 🧠 Discover startup ideas from real user frustrations
 * 📊 Clean results dashboard
 * 📁 CSV export for further analysis
-* 🎯 Multi-platform search support
-* ⚡ FastAPI-powered backend
+* 🎯 Multi-platform search support (5 platforms)
+* ⚡ FastAPI-powered async backend
 * 🔑 Reddit API integration
 * ✅ Input validation and loading states
 * 💡 Keyword suggestions and autocomplete
@@ -43,21 +43,26 @@ Instead of guessing what to build, Pain Miner searches platforms like Reddit, Ha
 * Reddit (PRAW API)
 * Hacker News (Algolia API)
 * Product Hunt (GraphQL API)
+* Dev.to (REST API)
+* arXiv (Atom XML API)
 
 ### Scraping Tools
 
 * HTTPX
 * BeautifulSoup
+* PRAW
 
 ---
 
 ## 🌍 Supported Platforms
 
-| Platform     | Method             |
-| ------------ | ------------------ |
-| Reddit       | PRAW API           |
-| Hacker News  | Algolia Search API |
-| Product Hunt | GraphQL API        |
+| Platform     | Method             | Auth Required |
+| ------------ | ------------------ | ------------- |
+| Hacker News  | Algolia Search API | ❌ No         |
+| Reddit       | PRAW API           | ✅ Yes        |
+| Product Hunt | GraphQL API        | ✅ Yes        |
+| Dev.to       | REST API           | ❌ No         |
+| arXiv        | Atom XML API       | ❌ No         |
 
 ---
 
@@ -74,14 +79,6 @@ hate using
 takes too long
 need a way to
 looking for
-```
-
-Example query:
-
-```text
-i wish
-manually doing
-no tool for
 ```
 
 ---
@@ -106,15 +103,21 @@ Each result includes:
 pain-miner/
 ├── backend/
 │   ├── scrapers/
+│   │   ├── __init__.py
 │   │   ├── hackernews.py
 │   │   ├── reddit.py
-│   │   └── producthunt.py
+│   │   ├── producthunt.py
+│   │   ├── devto.py
+│   │   └── arxiv.py
 │   ├── main.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   ├── Procfile
+│   └── railway.toml
 │
 └── frontend/
     ├── src/
     │   └── App.jsx
+    ├── index.html
     ├── package.json
     └── vite.config.js
 ```
@@ -126,7 +129,7 @@ pain-miner/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/pain-miner.git
+git clone https://github.com/khaled-dev123/pain-miner.git
 cd pain-miner
 ```
 
@@ -134,50 +137,34 @@ cd pain-miner
 
 ```bash
 cd backend
-
 python -m venv venv
-
 source venv/bin/activate
-# Windows:
-# venv\Scripts\activate
-
+# Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
 uvicorn main:app --reload
 ```
 
-Backend runs on:
-
-```text
-http://localhost:8000
-```
+Backend runs on `http://localhost:8000`
 
 ### Frontend
 
 ```bash
 cd frontend
-
 npm install
 npm run dev
 ```
 
-Frontend runs on:
-
-```text
-http://localhost:5173
-```
+Frontend runs on `http://localhost:5173`
 
 ---
 
 ## 🔑 Reddit API Setup
 
 1. Visit [https://www.reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
-2. Click **Create App**
-3. Select **Script**
-4. Copy:
-   * Client ID
-   * Client Secret
-5. Paste them into Pain Miner
+2. Click **Create App** → select **Script**
+3. Set redirect URI to `http://localhost:8080`
+4. Copy **Client ID** and **Client Secret**
+5. Paste them into Pain Miner dashboard
 
 ---
 
@@ -185,23 +172,18 @@ http://localhost:5173
 
 All search results can be exported as CSV and imported into:
 
-* Excel
-* Google Sheets
-* Airtable
-* Notion
+* Excel / Google Sheets
+* Airtable / Notion
 * Data analysis pipelines
 
 ---
 
 ## 🚀 Deployment
 
-### Frontend
-
-* Vercel
-
-### Backend
-
-* Railway
+| Service  | Platform | URL                                          |
+| -------- | -------- | -------------------------------------------- |
+| Frontend | Vercel   | https://pain-miner-omega.vercel.app          |
+| Backend  | Railway  | https://pain-miner-production.up.railway.app |
 
 ---
 
@@ -213,31 +195,29 @@ All search results can be exported as CSV and imported into:
 * Customer pain-point analysis
 * Product validation
 * Feature request mining
+* Academic research gap discovery (via arXiv)
 * Trend spotting
 
 ---
 
 ## 🔮 Future Roadmap
 
-* AI-powered pain clustering
+* AI-powered pain point clustering
+* Classification model to filter noise
 * Automatic startup idea generation
 * Sentiment analysis
 * Trend detection
-* User accounts
-* Search history
-* Saved projects
+* User accounts and search history
 * Email alerts
 * GitHub Issues support
 * Indie Hackers integration
-* X (Twitter) integration
+* Medium integration
 
 ---
 
 ## 🤝 Contributing
 
-Contributions, issues, and pull requests are welcome.
-
-Feel free to fork the project and improve it.
+Contributions, issues, and pull requests are welcome. Feel free to fork the project and improve it.
 
 ---
 
@@ -251,4 +231,4 @@ MIT License
 
 If you find this project useful, consider starring the repository.
 
-Building great startups starts with finding real problems.
+**Building great startups starts with finding real problems.**
