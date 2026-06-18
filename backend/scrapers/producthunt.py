@@ -1,11 +1,14 @@
 import httpx
+import os
 from datetime import datetime
 
 PH_API_URL = "https://api.producthunt.com/v2/api/graphql"
 
 async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str = None) -> list[dict]:
-    if not api_key:
-        raise Exception("Product Hunt API key is required")
+    access_token = api_key or os.getenv("PRODUCTHUNT_ACCESS_TOKEN")
+    
+    if not access_token:
+        raise Exception("Product Hunt access token is required")
 
     results = []
 
@@ -33,12 +36,13 @@ async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str 
                 json={"query": query, "variables": {"query": keyword}},
                 headers={
                     "Content-Type": "application/json",
-                    "Authorization": f"Bearer {api_key}"
+                    "Authorization": f"Bearer {access_token}",
+                    "Accept": "application/json"
                 }
             )
 
             if response.status_code != 200:
-                continue
+                raise Exception(f"Product Hunt API error: {response.status_code}")
 
             data = response.json()
             edges = data.get("data", {}).get("posts", {}).get("edges", [])
