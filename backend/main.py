@@ -22,6 +22,7 @@ class ScrapeRequest(BaseModel):
     reddit_client_id: Optional[str] = None
     reddit_client_secret: Optional[str] = None
     reddit_user_agent: Optional[str] = "pain-miner/1.0"
+    producthunt_api_key: Optional[str] = None
     limit: Optional[int] = 50
 
 @app.post("/scrape")
@@ -53,7 +54,7 @@ async def scrape(req: ScrapeRequest):
 
     if "producthunt" in req.platforms:
         try:
-            data = await scrape_producthunt(req.keywords, req.limit)
+            data = await scrape_producthunt(req.keywords, req.limit, req.producthunt_api_key)
             results.extend(data)
         except Exception as e:
             errors["producthunt"] = str(e)

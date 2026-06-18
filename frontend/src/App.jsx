@@ -12,6 +12,7 @@ export default function App() {
   const [keywords, setKeywords] = useState([])
   const [platforms, setPlatforms] = useState(["hn"])
   const [redditCreds, setRedditCreds] = useState({ client_id: "", client_secret: "" })
+  const [phApiKey, setPhApiKey] = useState("")
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
@@ -47,6 +48,7 @@ export default function App() {
         limit: 20,
         reddit_client_id: redditCreds.client_id || null,
         reddit_client_secret: redditCreds.client_secret || null,
+        producthunt_api_key: phApiKey || null,
       })
       setResults(res.data.results)
       setErrors(res.data.errors)
@@ -224,6 +226,15 @@ export default function App() {
       >
         {loading ? "Scraping..." : pressed ? "✓ Done" : "Run Scraper"}
       </button>
+
+      {!loading && results.length === 0 && Object.keys(errors).length === 0 && pressed && (
+        <div style={{
+          padding: 16, background: "#fff3f3", border: "1px solid #f00",
+          borderRadius: 8, marginBottom: 16, fontSize: 14, color: "#cc0000"
+        }}>
+          ⚠ No results found. Try different keywords or check your API credentials.
+        </div>
+      )}
 
       {/* Results */}
       {results.length > 0 && (

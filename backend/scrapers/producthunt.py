@@ -3,7 +3,10 @@ from datetime import datetime
 
 PH_API_URL = "https://api.producthunt.com/v2/api/graphql"
 
-async def scrape_producthunt(keywords: list[str], limit: int = 50) -> list[dict]:
+async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str = None) -> list[dict]:
+    if not api_key:
+        raise Exception("Product Hunt API key is required")
+
     results = []
 
     async with httpx.AsyncClient(timeout=10) as client:
@@ -28,7 +31,10 @@ async def scrape_producthunt(keywords: list[str], limit: int = 50) -> list[dict]
             response = await client.post(
                 PH_API_URL,
                 json={"query": query, "variables": {"query": keyword}},
-                headers={"Content-Type": "application/json"}
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {api_key}"
+                }
             )
 
             if response.status_code != 200:
