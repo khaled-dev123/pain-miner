@@ -2,7 +2,7 @@ import httpx
 from datetime import datetime
 import xml.etree.ElementTree as ET
 
-ARXIV_API_URL = "http://export.arxiv.org/api/query"
+ARXIV_API_URL = "https://export.arxiv.org/api/query"
 
 async def scrape_arxiv(keywords: list[str], limit: int = 50) -> list[dict]:
     results = []
