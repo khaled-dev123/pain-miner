@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 from scrapers.devto import scrape_devto
-
+from scrapers.arxiv import scrape_arxiv
 from scrapers.hackernews import scrape_hn
 from scrapers.reddit import scrape_reddit
 from scrapers.producthunt import scrape_producthunt
@@ -66,6 +66,12 @@ async def scrape(req: ScrapeRequest):
            results.extend(data)
         except Exception as e:
            errors["devto"] = str(e)
+    if "arxiv" in req.platforms:
+        try:
+           data = await scrape_arxiv(req.keywords, req.limit)
+           results.extend(data)
+        except Exception as e:
+           errors["arxiv"] = str(e)
 
     return {
         "total": len(results),
