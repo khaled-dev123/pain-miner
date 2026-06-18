@@ -192,6 +192,33 @@ export default function App() {
         )}
       </div>
 
+      {/* Product Hunt Info Box + API Key */}
+      {platforms.includes("producthunt") && (
+        <div style={{ marginBottom: 16 }}>
+          <div style={{
+            padding: 14, background: "#fff0f0", border: "1px solid #f0a0a0",
+            borderRadius: 8, marginBottom: 12, fontSize: 13
+          }}>
+            <p style={{ fontWeight: "bold", marginBottom: 6 }}>📋 How to get your Product Hunt API key:</p>
+            <ol style={{ margin: 0, paddingLeft: 18, lineHeight: "1.8" }}>
+              <li>Go to <a href="https://www.producthunt.com/v2/oauth/applications" target="_blank" rel="noreferrer" style={{ color: "#c05000" }}>producthunt.com/v2/oauth/applications</a></li>
+              <li>Click <strong>"Add an application"</strong> and fill in the details</li>
+              <li>After creating, copy your <strong>Developer Token</strong></li>
+            </ol>
+          </div>
+          <input
+            placeholder="Product Hunt API key"
+            type="password"
+            value={phApiKey}
+            onChange={e => setPhApiKey(e.target.value)}
+            style={{
+              width: "100%", padding: "10px 12px", border: "1px solid #ccc",
+              borderRadius: 8, fontFamily: "monospace", fontSize: 14, boxSizing: "border-box"
+            }}
+          />
+        </div>
+      )}
+
       {/* Platform warning */}
       {platforms.length === 0 && (
         <p style={{ color: "red", fontSize: 14, marginBottom: 12 }}>Please select at least one platform</p>
