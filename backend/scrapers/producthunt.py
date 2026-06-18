@@ -6,7 +6,7 @@ PH_API_URL = "https://api.producthunt.com/v2/api/graphql"
 
 async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str = None) -> list[dict]:
     access_token = api_key or os.getenv("PRODUCTHUNT_ACCESS_TOKEN")
-    
+
     if not access_token:
         raise Exception("Product Hunt access token is required")
 
@@ -15,8 +15,8 @@ async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str 
     async with httpx.AsyncClient(timeout=10) as client:
         for keyword in keywords:
             query = """
-            query($query: String!) {
-                posts(first: 20, order: VOTES, search: { query: $query }) {
+            query {
+                posts(first: 20, order: VOTES) {
                     edges {
                         node {
                             name
@@ -33,7 +33,7 @@ async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str 
 
             response = await client.post(
                 PH_API_URL,
-                json={"query": query, "variables": {"query": keyword}},
+                json={"query": query},
                 headers={
                     "Content-Type": "application/json",
                     "Authorization": f"Bearer {access_token}",
@@ -49,15 +49,20 @@ async def scrape_producthunt(keywords: list[str], limit: int = 50, api_key: str 
 
             for edge in edges:
                 node = edge.get("node", {})
-                results.append({
-                    "source": "producthunt",
-                    "title": node.get("name", ""),
-                    "body": node.get("description") or node.get("tagline", ""),
-                    "url": node.get("url", ""),
-                    "score": node.get("votesCount", 0),
-                    "author": "",
-                    "scraped_at": datetime.utcnow().isoformat(),
-                    "keyword_matched": keyword
-                })
+                title = node.get("name", "")
+                body = node.get("description") or node.get("tagline", "")
+
+                # filter by keyword manually
+                if keyword.lower() in title.lower() or keyword.lower() in body.lower():
+                    results.append({
+                        "source": "producthunt",
+                        "title": title,
+                        "body": body[:500],
+                        "url": node.get("url", ""),
+                        "score": node.get("votesCount", 0),
+                        "author": "",
+                        "scraped_at": datetime.utcnow().isoformat(),
+                        "keyword_matched": keyword
+                    })
 
     return results
