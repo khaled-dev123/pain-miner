@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
+from scrapers.devto import scrape_devto
 
 from scrapers.hackernews import scrape_hn
 from scrapers.reddit import scrape_reddit
@@ -58,6 +59,13 @@ async def scrape(req: ScrapeRequest):
             results.extend(data)
         except Exception as e:
             errors["producthunt"] = str(e)
+
+    if "devto" in req.platforms:
+        try:
+           data = await scrape_devto(req.keywords, req.limit)
+           results.extend(data)
+        except Exception as e:
+           errors["devto"] = str(e)
 
     return {
         "total": len(results),
