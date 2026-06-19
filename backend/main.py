@@ -6,7 +6,6 @@ from scrapers.devto import scrape_devto
 from scrapers.arxiv import scrape_arxiv
 from scrapers.hackernews import scrape_hn
 from scrapers.reddit import scrape_reddit
-from scrapers.producthunt import scrape_producthunt
 
 app = FastAPI(title="Pain Miner API")
 
@@ -23,7 +22,6 @@ class ScrapeRequest(BaseModel):
     reddit_client_id: Optional[str] = None
     reddit_client_secret: Optional[str] = None
     reddit_user_agent: Optional[str] = "pain-miner/1.0"
-    producthunt_api_key: Optional[str] = None
     limit: Optional[int] = 50
 
 @app.post("/scrape")
@@ -52,13 +50,6 @@ async def scrape(req: ScrapeRequest):
                 results.extend(data)
             except Exception as e:
                 errors["reddit"] = str(e)
-
-    if "producthunt" in req.platforms:
-        try:
-            data = await scrape_producthunt(req.keywords, req.limit, req.producthunt_api_key)
-            results.extend(data)
-        except Exception as e:
-            errors["producthunt"] = str(e)
 
     if "devto" in req.platforms:
         try:

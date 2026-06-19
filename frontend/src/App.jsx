@@ -133,7 +133,7 @@ export default function App() {
       <div style={{ marginBottom: 16 }}>
         <p style={{ fontWeight: "bold", marginBottom: 8 }}>Platforms:</p>
         <div style={{ display: "flex", gap: 12 }}>
-          {["hn", "reddit", "producthunt", "devto", "arxiv"].map(p => (
+          {["hn", "reddit", "devto", "arxiv"].map(p => (
             <button
               key={p}
               onClick={() => togglePlatform(p)}
@@ -144,7 +144,7 @@ export default function App() {
                 color: platforms.includes(p) ? "#fff" : "#000"
               }}
             >
-              {p === "hn" ? "Hacker News" : p === "reddit" ? "Reddit" : p === "producthunt" ? "Product Hunt" : p === "devto" ? "Dev.to" : "arXiv"}
+              {p === "hn" ? "Hacker News" : p === "reddit" ? "Reddit" : p === "devto" ? "Dev.to" : "arXiv"}
             </button>
           ))}
         </div>
