@@ -1,4 +1,5 @@
 import httpx
+import re
 from datetime import datetime
 
 DEVTO_API_URL = "https://dev.to/api/articles"
@@ -7,9 +8,8 @@ async def scrape_devto(keywords: list[str], limit: int = 50) -> list[dict]:
     results = []
 
     async with httpx.AsyncClient(timeout=15) as client:
-        # fetch a large pool of recent articles once
         all_articles = []
-        for page in range(1, 4):  # fetch ~300 articles
+        for page in range(1, 6):  # fetch ~500 articles for better coverage
             response = await client.get(
                 DEVTO_API_URL,
                 params={"per_page": 100, "page": page},
@@ -22,17 +22,17 @@ async def scrape_devto(keywords: list[str], limit: int = 50) -> list[dict]:
                 break
             all_articles.extend(batch)
 
-        # now filter by each keyword
         for keyword in keywords:
-            kw_lower = keyword.lower()
+            pattern = re.compile(r'\b' + re.escape(keyword.lower()) + r'\b')
             count = 0
             for article in all_articles:
                 if count >= limit:
                     break
                 title = article.get("title", "")
                 description = article.get("description", "") or ""
+                combined = f"{title} {description}".lower()
 
-                if kw_lower in title.lower() or kw_lower in description.lower():
+                if pattern.search(combined):
                     results.append({
                         "source": "devto",
                         "title": title,
