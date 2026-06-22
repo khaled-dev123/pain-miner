@@ -15,8 +15,7 @@ Instead of guessing what to build, Pain Miner searches platforms like Reddit, Ha
 * 🔍 Search pain-point keywords across multiple platforms
 * 🧠 Discover startup ideas from real user frustrations
 * 📊 Clean results dashboard
-* 📁 CSV export for further analysis
-* 🎯 Multi-platform search support (5 platforms)
+* 🎯 Multi-platform search support 
 * ⚡ FastAPI-powered async backend
 * 🔑 Reddit API integration
 * ✅ Input validation and loading states
@@ -42,7 +41,6 @@ Instead of guessing what to build, Pain Miner searches platforms like Reddit, Ha
 
 * Reddit (PRAW API)
 * Hacker News (Algolia API)
-* Product Hunt (GraphQL API)
 * Dev.to (REST API)
 * arXiv (Atom XML API)
 
@@ -60,7 +58,6 @@ Instead of guessing what to build, Pain Miner searches platforms like Reddit, Ha
 | ------------ | ------------------ | ------------- |
 | Hacker News  | Algolia Search API | ❌ No         |
 | Reddit       | PRAW API           | ✅ Yes        |
-| Product Hunt | GraphQL API        | ✅ Yes        |
 | Dev.to       | REST API           | ❌ No         |
 | arXiv        | Atom XML API       | ❌ No         |
 
